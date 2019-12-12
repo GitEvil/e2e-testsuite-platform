@@ -16,7 +16,7 @@
   + [API commands](#api-commands)
 * [Local development of the testsuite](#local-development-of-the-testsuite)
 
-This package contains the e2e test suite for Shopware 6. The test suite is built on top of [Cypress](https://github.com/cypress-io/cypress) as well as the following Cypress plugins:
+This package contains the e2e test suite for Shopware 6. The test suite is based on the testing framework [Cypress](https://github.com/cypress-io/cypress) just as these corresponding plugins:
 
 - [`cypress-select-tests`](https://github.com/bahmutov/cypress-select-tests)
 - [`cypress-log-to-output`](https://github.com/flotwig/cypress-log-to-output)
@@ -24,7 +24,7 @@ This package contains the e2e test suite for Shopware 6. The test suite is built
 
 ## Setup for plugins
 
-Depending on your environment (administration or storefront) please create the following folder structure:
+Depending on your environment (administration or storefront) please create a folder structure:
 
 ```text
 Resources
@@ -39,7 +39,7 @@ Resources
             `-- support
 ```
 
-Inside the `Resources/app/<environment>/test/e2e` folder, please run `npm init -y` to create a `package.json`. It's very convenient to place a script inside the newly created `package.json` to run the tests locally. To do so, please add the following section:
+Navigate to `Resources/app/<environment>/test/e2e` and run `npm init -y` to create a `package.json`. A convenient way to run tests locally is to place a script inside the newly created `package.json`. Simply add the following code section:
 
 ```json
 "scripts": {
@@ -59,7 +59,7 @@ Next up, please create a new file `e2e/cypress/plugins/index.js` with the follow
 module.exports = require('@shopware/e2e-testsuite-platform/cypress/plugins');
 ```
 
-Last but not least, create a new file `e2e/cypress/support/index.js` with the following content:
+Lastly, create a new file `e2e/cypress/support/index.js` with the following content:
 
 ```js
 // Require test suite commons
@@ -68,9 +68,9 @@ require('@shopware/e2e-testsuite-platform/cypress/support');
 
 ## Writing tests
 
-Please head over to the [Cypress documentation](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#Add-a-test-file) to get familiar with the testing framework. As please get familar with our [guide on how to write test using Cypress](https://docs.shopware.com/en/shopware-platform-dev-en/how-to/end-to-end-tests-in-plugins).
+Before you start, head over to the [Cypress documentation](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#Add-a-test-file) and get familiar with the testing framework. It might also be useful to have a look atour [guide on how to write test using Cypress](https://docs.shopware.com/en/shopware-platform-dev-en/how-to/end-to-end-tests-in-plugins).
 
-## Locally running tests
+## Running tests locally
 
 Switch to the folder `Resources/app/<enviroment>/test/e2e` and execute the following command:
 
@@ -78,11 +78,11 @@ Switch to the folder `Resources/app/<enviroment>/test/e2e` and execute the follo
 CYPRESS_baseUrl=<your-url> npm run open
 ```
 
-It opens up the Cypress test runner which allows you to run and debug your tests.
+This will start the Cypress test runner that lets you run and debug any available test.
 
 ## Gitlab integration
 
-In the following configuration, a new job called `.E2E` was created as a template. It installs shopware, installs the plugin, initializes the administration and storefront, sets up a testing database and executes the tests.
+In the following configuration, a new job called `.E2E` is created as a template. It first installs Shopware and the plugin, initializes the administration and storefront, sets up a testing database and executes all associated tests.
 
 ```yml
 .E2E:
@@ -130,7 +130,7 @@ At the bottom of the configuration file we created another job called `Administr
 
 ## Commands
 
-The package contains a bunch of pre-built commands for easier navigation in the administration as well as storefront using Cypress.
+The package contains several pre-built commands for easier navigation in administration and storefront using Cypress.
 
 ### General commands
 
@@ -140,25 +140,25 @@ The package contains a bunch of pre-built commands for easier navigation in the 
 cy.setLocaleToEnGb()
 ```
 
-#### Logs in to the Administration manually
+#### Manual logging in the Administration
 
 ```js
 cy.login(userType)
 ```
 
-#### Types in an input element and checks if the content was correctly typed
+#### Types in an input element and checks if the text is correctly displayed.
 
 ```js
 cy.get('input[name="companyName"]').typeAndCheck('shopware AG');
 ```
 
-#### Clears field, types in an input element and checks if the content was correctly typed
+#### Clears a field, then types in an input element and checks if the content is correctly displayed
 
 ```js
 cy.get('input[name="companyName"]').clearTypeAndCheck('shopware AG');
 ```
 
-#### Types in a sw-select field and checks if the content was correctly typed (multi select)
+#### Types in a sw-select field and checks if the content is correctly displayed (multi select)
 
 ```js
 cy.get('.select-payment-method')
@@ -167,21 +167,21 @@ cy.get('.select-payment-method')
   });
 ```
 
-#### Types in an sw-select field (single select)
+#### Types in an sw-select field (single select).
 
 ```js
 cy.get('.sw-sales-channel-switch')
   .typeSingleSelect('Storefront', '.sw-entity-single-select');
 ```
 
-#### Types in an sw-select field and checks if the content was correctly typed (single select)
+#### Types in an sw-select field and checks if the content is correctly displayed (single select).
 
 ```js
 cy.get('.sw-sales-channel-switch')
   .typeSingleSelectAndCheck('Storefront', '.sw-entity-single-select');
 ```
 
-#### Types in an legacy swSelect field and checks if the content was correctly typed
+#### Types in an legacy swSelect field and checks if the content is correctly displayed.
 
 ```js
 cy.get('.sw-settings-shipping-detail__delivery-time')
@@ -192,19 +192,19 @@ cy.get('.sw-settings-shipping-detail__delivery-time')
 );
 ```
 
-#### Types in the global search field and verify search terms in url
+#### Types into the global search field and verifies the search term by comparing the urls
 
 ```js
 cy.get('.sw-search-bar__input').typeAndCheckSearchField('Ruler');
 ```
 
-#### Wait for a notification to appear and check its message
+#### Waits for a notification to appear and checks its message
 
 ```js
 cy.awaitAndCheckNotification('Shipping method "Luftpost" has been deleted.');
 ```
 
-#### Click context menu in order to cause a desired action
+#### Clicks context menu in order to trigger a certain action
 
 ```js
 cy.clickContextMenuItem(
@@ -214,7 +214,7 @@ cy.clickContextMenuItem(
 );
 ```
 
-#### Navigate to module by clicking the corresponding main menu item
+#### Navigates to the module by clicking the corresponding main menu item
 
 ```js
 cy.clickMainMenuItem({
@@ -224,7 +224,7 @@ cy.clickMainMenuItem({
 });
 ```
 
-#### Click user menu to open it up
+#### Clicks user menu in order to open it
 
 ```js
 cy.openUserActionMenu();
@@ -240,19 +240,19 @@ cy.get('.sw-cms-sidebar__block-preview')
 
 ### Storefront commands
 
-#### Get the sales channel Id via Admin API
+#### Gets a Sales Channel ID via the Admin API
 
 ```js
 cy.getSalesChannelId()
 ```
 
-#### Performs Storefront Api Requests
+#### Performs storefront API requests
 
 ```js
 cy.storefrontApiRequest(method, endpoint, header = {}, body = {})
 ```
 
-#### Returns random product with id, name and url to view product
+#### Returns a random product including its ID, name and URL
 
 ```js
 cy.getRandomProductInformationForCheckout()
@@ -260,19 +260,19 @@ cy.getRandomProductInformationForCheckout()
 
 ### System commands
 
-#### Activates Shopware theme for Cypress test runner
+#### Activates the Shopware theme for use in the Cypress test runner
 
 ```js
 cy.activateShopwareTheme();
 ```
 
-#### Cleans up any previous state by restoring database and clearing caches
+#### Cleans up any previous states by restoring the database and clearing caches
 
 ```js
 cy.cleanUpPreviousState();
 ```
 
-#### Opens up the administration initially and waits for the "me" call to be successful
+#### Initially opens up the administration, waits for a successful "me" call
 
 ```js
 cy.openInitialPage();
@@ -280,39 +280,39 @@ cy.openInitialPage();
 
 ### API commands
 
-#### Authenticate towards the Shopware API
+#### Authenticates towards the Shopware API
 
 ```js
 cy.authenticate()
 ```
 
-#### Logs in silently using Shopware API
+#### Silently keeps a log using the Shopware API
 
 ```js
 cy.loginViaApi()
 ```
 
-#### Search for an existing entity using Shopware API at the given endpoint
+#### Searches for an existing entity by using Shopware API at a given endpoint
 
 ```js
 cy.searchViaAdminApi(data)
 ```
 
-#### Handling API requests
+#### API request handling
 
 ```js
 cy.requestAdminApi(method, url, requestData)
 ```
 
-#### Updates an existing entity using Shopware API at the given endpoint
+#### Updates an existing entity using Shopware API at a given endpoint
 
 ```js
 cy.updateViaAdminApi(endpoint, id, data)
 ```
 
-## Local development of the testsuite
+## Local testsuite development
 
-It's possible to use a local clone of the testsuite instead of the package here on Github. It opens up the ability to write new commands and / or modify the behavior of the testsuite without pushing it to the `master` branch. [`npm link`](https://docs.npmjs.com/cli/link.html) provides a convenient way for it.
+It's also possible to employ a local clone of the test suite instead of the package here on Github. It opens up the ability to write new commands and / or modify test suite behavior without pushing it to the `master` branch. [`npm link`](https://docs.npmjs.com/cli/link.html) provides a convenient way of doing just that.
 
 ```bash
 git clone git@github.com:shopware/e2e-testsuite-platform.git
